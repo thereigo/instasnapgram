@@ -49,7 +49,7 @@ export async function saveUserToDB(user: {
     }
 }
 
-export async function SignInAccount(user: {
+export async function signInAccount(user: {
     email: string;
     password: string;
 }) {
@@ -81,5 +81,14 @@ export async function getCurrentUser() {
     } catch (error) {
       console.log(error);
       return null;
+    }
+  }
+
+  export async function signOutAccount() {
+    try {
+      const session = await account.deleteSession('current');
+      return session;
+    } catch (error) {
+      console.error(error);
     }
   }
