@@ -7,6 +7,7 @@ import { useGetPosts, useSerchPosts } from "@/lib/react-query/queriesAndMutation
 import { useEffect, useState } from "react"
 import { useInView } from "react-intersection-observer";
 
+
 const Explore = () => {
   const { ref, inView } = useInView();
   const { data: posts, fetchNextPage, hasNextPage } = useGetPosts()
@@ -14,7 +15,7 @@ const Explore = () => {
   const [searchValue, setSearchValue] = useState('')
   const debounceValue = useDebounce(searchValue, 500)
   const { data: searchedPosts, isFetching: isSearchFetching } = useSerchPosts(debounceValue)
-
+  
   useEffect(() => {
     if (inView && !searchValue) {
       fetchNextPage();
@@ -62,13 +63,13 @@ const Explore = () => {
         {shouldShowSearchResults ? (
           <SearchResults
             isSearchFetching={isSearchFetching}
-            searchedPosts={searchedPosts}
+            searchedPosts={searchedPosts?.documents ?? []}
           />
         ) : shouldShowPosts ? (
           <p className="text-light-4 mt-10 text-center w-full">End of posts</p>
         ) : (
           posts.pages.map((item, index) => (
-            <GridPostList key={`page-${index}`} posts={item.documents} />
+            item && <GridPostList key={`page-${index}`} posts={item.documents} />
           ))
         )}
       </div>
