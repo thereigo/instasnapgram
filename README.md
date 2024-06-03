@@ -1,9 +1,10 @@
 # Instasnapgram
 
-⚡ This is a instasnapgram clone application built with React(Next) and Tailwind CSS, powered by Appwrite and Vercel. ⚡
+⚡ Instasnapgram is a Instagram clone with a real-time post feature, built using React, Next.js, tanstack and Tailwind CSS. ⚡
+⚡ Powered by Appwrite. and Vercel. ⚡
 
 ## Live Demonstration
-https://instasnapgram-v1.vercel.app/
+🚀 https://instasnapgram-v1.vercel.app/ 🚀
 
 ## Home
 ![LOGO](https://github.com/thereigo/instasnapgram/blob/main/instasnapgram-logo-1.png)
