@@ -1,6 +1,7 @@
 # Instasnapgram
 
-⚡ Instasnapgram is a Instagram clone with a real-time post feature, built using React, Next.js, tanstack and Tailwind CSS. ⚡ </br>
+### Instasnapgram is a Instagram clone with a real-time post feature. 🔥 </br>
+✨ Built using React, Next.js, tanstack and Tailwind CSS. ✨ </br>
 ⚡ Powered by Appwrite and Vercel. ⚡
 
 ## Live Demonstration
