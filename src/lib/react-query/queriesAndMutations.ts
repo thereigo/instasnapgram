@@ -7,6 +7,9 @@ import {
 import { signInAccount, createUserAccount, signOutAccount, createPost, getRecentPosts, likePost, savePost, deleteSavedPost, getCurrentUser, getPostById, updatePost, deletePost, getInfinitePosts, searchPosts, getUserPosts, getUsers, getUserById, updateUser } from '../appwrite/api'
 import { INewUser, INewPost, IUpdatePost, IUpdateUser } from '@/types'
 import { QUERY_KEYS } from './queryKeys'
+import { Models } from 'appwrite'
+
+
 
 export const useCreateUserAccount = () => {
     return useMutation({
@@ -144,16 +147,30 @@ export const useDeletePost = () => {
   });
 };
 
+// export const useGetPosts = () => {
+//   return useInfiniteQuery({
+//     queryKey: [QUERY_KEYS.GET_INFINITE_POSTS],
+//     queryFn: getInfinitePosts,
+//     getNextPageParam: (lastPage) => {
+//       if(lastPage && lastPage.documents.length === 0) return null
+//       const lastId = lastPage?.documents[lastPage?.documents.length - 1].$id
+//       return lastId
+//     }
+//   })
+// }
+
 export const useGetPosts = () => {
-  return useInfiniteQuery({
+  return useInfiniteQuery<Models.DocumentList<Models.Document>, Error>({
     queryKey: [QUERY_KEYS.GET_INFINITE_POSTS],
-    queryFn: getInfinitePosts,
+    queryFn: () => getInfinitePosts({ pageParam: 0 } as { pageParam: number }),
+    initialPageParam: 0,
     getNextPageParam: (lastPage) => {
-      if(lastPage && lastPage.documents.length === 0) return null
-      const lastId = lastPage?.documents[lastPage?.documents.length - 1].$id
-      return lastId
+      if (lastPage && lastPage.documents.length === 0) return null;
+
+      const lastId = lastPage.documents[lastPage.documents.length - 1].$id;
+      return lastId;
     }
-  })
+  });
 }
 
 export const useSerchPosts = (searchTerm: string) => {

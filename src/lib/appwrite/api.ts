@@ -341,7 +341,28 @@ export async function deletePost(postId?: string, imageId?: string) {
   }
 }
 
-export async function getInfinitePosts({ pageParam }: { pageParam: number}) {
+// export async function getInfinitePosts({ pageParam }: { pageParam: number}) {
+//   const queries: any[] = [Query.orderDesc("$updatedAt"), Query.limit(10)];
+
+//   if (pageParam) {
+//     queries.push(Query.cursorAfter(pageParam.toString()));
+//   }
+
+//   try {
+//     const posts = await databases.listDocuments(
+//       appwriteConfig.databaseId,
+//       appwriteConfig.postCollectionId,
+//       queries
+//     );
+//     if (!posts) throw Error;
+//     return posts;
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
+export async function getInfinitePosts({ pageParam }: { pageParam?: number }) {
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const queries: any[] = [Query.orderDesc("$updatedAt"), Query.limit(10)];
 
   if (pageParam) {
@@ -354,10 +375,11 @@ export async function getInfinitePosts({ pageParam }: { pageParam: number}) {
       appwriteConfig.postCollectionId,
       queries
     );
-    if (!posts) throw Error;
+    if (!posts) throw new Error("No posts found");
     return posts;
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    throw error; // Ensure errors are propagated properly
   }
 }
 
@@ -397,6 +419,7 @@ export async function getUserPosts(userId?: string) {
 
 // ============================== GET USERS
 export async function getUsers(limit?: number) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const queries: any[] = [Query.orderDesc("$createdAt")];
 
   if (limit) {
